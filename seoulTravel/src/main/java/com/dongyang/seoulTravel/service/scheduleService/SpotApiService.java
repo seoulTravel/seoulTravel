@@ -1,63 +1,85 @@
 package com.dongyang.seoulTravel.service.scheduleService;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.dongyang.seoulTravel.dto.schedule.SpotDto;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import java.util.stream.Collectors;
 
 @Service
 public class SpotApiService {
     private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
 
-    public SpotApiService(RestTemplate restTemplate) {
+    @Autowired
+    public SpotApiService(RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
+        this.objectMapper = objectMapper;
     }
 
-    public List<SpotDto> getSpotApiService() throws Exception {
-        String url = "http://openapi.seoul.go.kr:8088/4a75626b4e736838383947556e7664/xml/TbVwAttractions/1/5/";
-        String response = restTemplate.getForObject(url, String.class);
+    public List<SpotDto> getAllSpots() throws Exception {
+        List<SpotDto> allSpots = new ArrayList<>();
+        int start = 1;
+        int end = 1000;
+        boolean hasMoreData = true;
 
-        // XML to List<SpotDto> conversion
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(new ByteArrayInputStream(response.getBytes()));
+        while (hasMoreData) {
+            String url = String.format("http://openapi.seoul.go.kr:8088/4a75626b4e736838383947556e7664/json/TbVwAttractions/%d/%d/", start, end);
+            String response = restTemplate.getForObject(url, String.class);
 
-        NodeList nodeList = document.getElementsByTagName("row");
-        List<SpotDto> spots = new ArrayList<>();
-
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Element element = (Element) nodeList.item(i);
-            SpotDto spotDto = new SpotDto();
-
-            spotDto.setPostSn(getNodeValue(element, "POST_SN"));
-            spotDto.setLangCodeId(getNodeValue(element, "LANG_CODE_ID"));
-            spotDto.setPostSj(getNodeValue(element, "POST_SJ"));
-            spotDto.setPostUrl(getNodeValue(element, "POST_URL"));
-            spotDto.setAddress(getNodeValue(element, "ADDRESS"));
-            spotDto.setNewAddress(getNodeValue(element, "NEW_ADDRESS"));
-            spotDto.setCmnnTelno(getNodeValue(element, "CMMN_TELNO"));
-            spotDto.setSubwayInfo(getNodeValue(element, "SUBWAY_INFO"));
-            spotDto.setTag(getNodeValue(element, "TAG"));
-
-            spots.add(spotDto);
+            try {
+                JsonNode root = objectMapper.readTree(response);
+                JsonNode rows = root.path("TbVwAttractions").path("row");
+                if (rows.isArray()) {
+                    int initialSize = allSpots.size();
+                    for (JsonNode row : rows) {
+                        SpotDto spotDto = objectMapper.treeToValue(row, SpotDto.class);
+                        // 한국어만 따로 설정 ------------- 추후에 영어 넣을 수도 있을 것 같음 확인!
+                        if ("ko".equals(spotDto.getLangCodeId())) {
+                            allSpots.add(spotDto);
+                        }
+                    }
+                    hasMoreData = allSpots.size() > initialSize; // 만약 새로운 데이터가 추가되지 않았다면 더 이상 데이터가 없는 것으로 간주
+                    start += 1000;
+                    end += 1000;
+                } else {
+                    hasMoreData = false;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new Exception("Failed API response: " + e.getMessage());
+            }
         }
 
-        return spots;
+        return allSpots;
     }
 
-    private String getNodeValue(Element element, String tagName) {
-        NodeList nodeList = element.getElementsByTagName(tagName);
-        if (nodeList != null && nodeList.getLength() > 0) {
-            return nodeList.item(0).getTextContent();
-        }
-        return null;
+    // 장소 검색
+    public List<SpotDto> searchSpots(String keyword) throws Exception {
+        List<SpotDto> spots = getAllSpots();
+
+        // 키워드 겁색 - 소문자
+        String normalizedKeyword = keyword.trim().toLowerCase();
+
+        // 필터링
+        // 장소명 / 태그
+        return spots.stream()
+                .filter(spot -> {
+                    boolean matches = false;
+                    if (spot.getPostSj() != null) {
+                        matches = spot.getPostSj().toLowerCase().contains(normalizedKeyword);
+                    }
+                    if (!matches && spot.getTag() != null) {
+                        matches = spot.getTag().toLowerCase().contains(normalizedKeyword);
+                    }
+                    return matches;
+                })
+                .collect(Collectors.toList());
     }
 }
