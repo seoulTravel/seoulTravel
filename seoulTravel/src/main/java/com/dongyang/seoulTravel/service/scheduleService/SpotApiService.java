@@ -41,7 +41,7 @@ public class SpotApiService {
                     for (JsonNode row : rows) {
                         SpotDto spotDto = objectMapper.treeToValue(row, SpotDto.class);
                         // 한국어만 따로 설정 ------------- 추후에 영어 넣을 수도 있을 것 같음 확인!
-                        if ("ko".equals(spotDto.getLangCodeId())) {
+                        if ("ko".equals(spotDto.getSpotLangCodeId())) {
                             allSpots.add(spotDto);
                         }
                     }
@@ -72,11 +72,11 @@ public class SpotApiService {
         return spots.stream()
                 .filter(spot -> {
                     boolean matches = false;
-                    if (spot.getPostSj() != null) {
-                        matches = spot.getPostSj().toLowerCase().contains(normalizedKeyword);
+                    if (spot.getSpotPostSj() != null) {
+                        matches = spot.getSpotPostSj().toLowerCase().contains(normalizedKeyword);
                     }
-                    if (!matches && spot.getTag() != null) {
-                        matches = spot.getTag().toLowerCase().contains(normalizedKeyword);
+                    if (!matches && spot.getSpotTag() != null) {
+                        matches = spot.getSpotTag().toLowerCase().contains(normalizedKeyword);
                     }
                     return matches;
                 })

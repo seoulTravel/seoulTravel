@@ -11,44 +11,44 @@ import lombok.Setter;
 public class SpotDto {
 
     @JsonProperty("POST_SN")
-    private String postSn;
+    private String spotPostSn;
 
     @JsonProperty("LANG_CODE_ID")
-    private String langCodeId;
+    private String spotLangCodeId;
 
     @JsonProperty("POST_SJ")
-    private String postSj;
+    private String spotPostSj;
 
     @JsonProperty("POST_URL")
-    private String postUrl;
+    private String spotPostUrl;
 
     @JsonProperty("ADDRESS")
-    private String address;
+    private String spotAddress;
 
     @JsonProperty("NEW_ADDRESS")
-    private String newAddress;
+    private String spotNewAddress;
 
     @JsonProperty("CMMN_TELNO")
-    private String cmnnTelno;
+    private String spotCmnnTelno;
 
     @JsonProperty("SUBWAY_INFO")
-    private String subwayInfo;
+    private String spotSubwayInfo;
 
     @JsonProperty("TAG")
-    private String tag;
+    private String spotTag;
 
     @Override
     public String toString() {
         return "SpotDto{" +
-                "postSn='" + postSn + '\'' +
-                ", langCodeId='" + langCodeId + '\'' +
-                ", postSj='" + postSj + '\'' +
-                ", postUrl='" + postUrl + '\'' +
-                ", address='" + address + '\'' +
-                ", newAddress='" + newAddress + '\'' +
-                ", cmnnTelno='" + cmnnTelno + '\'' +
-                ", subwayInfo='" + subwayInfo + '\'' +
-                ", tag='" + tag + '\'' +
+                "spotPostSn='" + spotPostSn + '\'' +
+                ", spotLangCodeId='" + spotLangCodeId + '\'' +
+                ", spotPostSj='" + spotPostSj + '\'' +
+                ", spotPostUrl='" + spotPostUrl + '\'' +
+                ", spotAddress='" + spotAddress + '\'' +
+                ", spotNewAddress='" + spotNewAddress + '\'' +
+                ", spotCmnnTelno='" + spotCmnnTelno + '\'' +
+                ", spotSubwayInfo='" + spotSubwayInfo + '\'' +
+                ", spotTag='" + spotTag + '\'' +
                 '}';
     }
 }
