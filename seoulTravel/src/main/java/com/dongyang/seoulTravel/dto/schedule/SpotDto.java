@@ -10,31 +10,45 @@ import lombok.Setter;
 @Setter
 public class SpotDto {
 
-    @JsonProperty("post_sn")
+    @JsonProperty("POST_SN")
     private String postSn;
 
-    @JsonProperty("lang_code_id")
+    @JsonProperty("LANG_CODE_ID")
     private String langCodeId;
 
-    @JsonProperty("post_sj")
+    @JsonProperty("POST_SJ")
     private String postSj;
 
-    @JsonProperty("post_url")
+    @JsonProperty("POST_URL")
     private String postUrl;
 
-    @JsonProperty("address")
+    @JsonProperty("ADDRESS")
     private String address;
 
-    @JsonProperty("new_address")
+    @JsonProperty("NEW_ADDRESS")
     private String newAddress;
 
-    @JsonProperty("cmnn_telno")
+    @JsonProperty("CMMN_TELNO")
     private String cmnnTelno;
 
-    @JsonProperty("subway_info")
+    @JsonProperty("SUBWAY_INFO")
     private String subwayInfo;
 
-    @JsonProperty("tag")
+    @JsonProperty("TAG")
     private String tag;
 
+    @Override
+    public String toString() {
+        return "SpotDto{" +
+                "postSn='" + postSn + '\'' +
+                ", langCodeId='" + langCodeId + '\'' +
+                ", postSj='" + postSj + '\'' +
+                ", postUrl='" + postUrl + '\'' +
+                ", address='" + address + '\'' +
+                ", newAddress='" + newAddress + '\'' +
+                ", cmnnTelno='" + cmnnTelno + '\'' +
+                ", subwayInfo='" + subwayInfo + '\'' +
+                ", tag='" + tag + '\'' +
+                '}';
+    }
 }
