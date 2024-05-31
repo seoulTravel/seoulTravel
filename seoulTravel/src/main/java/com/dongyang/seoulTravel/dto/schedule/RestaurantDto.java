@@ -8,7 +8,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class RestaurantDto {
+public class RestaurantDto implements PlaceDto{
 
     @JsonProperty("POST_SN")
     private String restauPostSn;
@@ -36,6 +36,18 @@ public class RestaurantDto {
 
     @JsonProperty("TAG")
     private String restauTag;
+
+
+    @Override
+    public String getName() {
+        return restauPostSj;
+    }
+
+    @Override
+    public String getAddress() {
+        return restauNewAddress;
+    }
+
 
     @Override
     public String toString() {
