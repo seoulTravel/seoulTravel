@@ -36,6 +36,10 @@ dependencies {
 
 	/*RestTemplate 의존성 추가*/
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+	/*Kakao API 의존성 추가 -- JUnit 5 + Mockito*/
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mockito:mockito-core'
 }
 
 tasks.named('test') {
