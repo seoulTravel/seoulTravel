@@ -40,7 +40,7 @@ public class PlaceApiService {
 
         // 숙소 데이터 가져오기
         try {
-            List<AccommodationDto> accommodations = accommodationApiService.getAllAccommodations();
+            List<AccommodationDto> accommodations = accommodationApiService.getAllAccommodation();
             places.addAll(accommodations);
         } catch (Exception e) {
             e.printStackTrace();
