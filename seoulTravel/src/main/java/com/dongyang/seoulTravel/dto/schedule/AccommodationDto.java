@@ -8,7 +8,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AccommodationDto {
+public class AccommodationDto implements PlaceDto{
 
     @JsonProperty("MGTNO")
     private String accoMgtNo; //관리 번호
@@ -39,4 +39,14 @@ public class AccommodationDto {
 
     @JsonProperty("Y") //좌표정보 - 위도
     private String latitude;
+
+    @Override
+    public String getName() {
+        return accoBplcnm;
+    }
+
+    @Override
+    public String getAddress() {
+        return accoRdnWhlAddr;
+    }
 }
