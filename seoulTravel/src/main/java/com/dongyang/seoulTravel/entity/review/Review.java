@@ -1,4 +1,4 @@
-package com.dongyang.seoulTravel.review.entity;
+package com.dongyang.seoulTravel.entity.review;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

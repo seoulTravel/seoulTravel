@@ -1,6 +1,6 @@
-package com.dongyang.seoulTravel.review.repository;
+package com.dongyang.seoulTravel.repository.review;
 
-import com.dongyang.seoulTravel.review.entity.Review;
+import com.dongyang.seoulTravel.entity.review.Review;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.ArrayList;

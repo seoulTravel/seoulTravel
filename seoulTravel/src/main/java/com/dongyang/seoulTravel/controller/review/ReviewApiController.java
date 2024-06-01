@@ -1,8 +1,8 @@
-package com.dongyang.seoulTravel.review.controller;
+package com.dongyang.seoulTravel.controller.review;
 
-import com.dongyang.seoulTravel.review.dto.ReviewDto;
-import com.dongyang.seoulTravel.review.entity.Review;
-import com.dongyang.seoulTravel.review.repository.ReviewRepository;
+import com.dongyang.seoulTravel.dto.review.ReviewDto;
+import com.dongyang.seoulTravel.entity.review.Review;
+import com.dongyang.seoulTravel.repository.review.ReviewRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
