@@ -1,7 +1,7 @@
-package com.dongyang.seoulTravel.review.dto;
+package com.dongyang.seoulTravel.dto.review;
 
 
-import com.dongyang.seoulTravel.review.entity.Review;
+import com.dongyang.seoulTravel.entity.review.Review;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 
