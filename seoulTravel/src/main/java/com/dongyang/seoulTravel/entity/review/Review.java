@@ -30,11 +30,21 @@ public class Review {
     private String review_comment;
     @Column(updatable = false)
     private Instant timestamp;
-
     @PrePersist
     protected void onCreate() {
         this.timestamp = Instant.now();
     }
+    @Column
+    private Instant review_hits;
+    @Column
+    private Instant review_scraps;
+    @Column
+    private Instant review_likes;
+    @Column
+    private Instant review_Comments;
+
+    //태그데이터, 사진 추가
+
 
     public void patch(Review review) {
         if(review.planner_id != null)
