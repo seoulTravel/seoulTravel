@@ -43,25 +43,5 @@ public class RestaurantDto implements PlaceDto{
         return restauPostSj;
     }
 
-    @Override
-    public String getAddress() {
-        return restauNewAddress;
-    }
-
-
-    @Override
-    public String toString() {
-        return "ResaturantDto{" +
-                "restauPostSn='" + restauPostSn + '\'' +
-                ", restauLangCodeId='" + restauLangCodeId + '\'' +
-                ", restauPostSj='" + restauPostSj + '\'' +
-                ", restauPostUrl='" + restauPostUrl + '\'' +
-                ", restauAddress='" + restauAddress + '\'' +
-                ", restauNewAddress='" + restauNewAddress + '\'' +
-                ", restauCmnnTelno='" + restauCmnnTelno + '\'' +
-                ", restauSubwayInfo='" + restauSubwayInfo + '\'' +
-                ", restauTag='" + restauTag + '\'' +
-                '}';
-    }
 
 }
