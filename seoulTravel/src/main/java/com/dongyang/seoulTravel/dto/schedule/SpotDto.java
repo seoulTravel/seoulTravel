@@ -43,23 +43,4 @@ public class SpotDto implements PlaceDto{
         return spotPostSj;
     }
 
-    @Override
-    public String getAddress() {
-        return spotNewAddress;
-    }
-
-    @Override
-    public String toString() {
-        return "SpotDto{" +
-                "spotPostSn='" + spotPostSn + '\'' +
-                ", spotLangCodeId='" + spotLangCodeId + '\'' +
-                ", spotPostSj='" + spotPostSj + '\'' +
-                ", spotPostUrl='" + spotPostUrl + '\'' +
-                ", spotAddress='" + spotAddress + '\'' +
-                ", spotNewAddress='" + spotNewAddress + '\'' +
-                ", spotCmnnTelno='" + spotCmnnTelno + '\'' +
-                ", spotSubwayInfo='" + spotSubwayInfo + '\'' +
-                ", spotTag='" + spotTag + '\'' +
-                '}';
-    }
 }

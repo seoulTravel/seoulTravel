@@ -39,4 +39,3 @@ public class TravelPlanController {
         travelPlanService.deleteTravelPlan(id);
     }
 }
-

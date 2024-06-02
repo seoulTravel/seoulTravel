@@ -45,8 +45,4 @@ public class AccommodationDto implements PlaceDto{
         return accoBplcnm;
     }
 
-    @Override
-    public String getAddress() {
-        return accoRdnWhlAddr;
-    }
 }
