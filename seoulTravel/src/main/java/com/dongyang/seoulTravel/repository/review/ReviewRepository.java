@@ -8,5 +8,6 @@ import java.util.ArrayList;
 public interface ReviewRepository extends CrudRepository<Review, Integer> {
     @Override
     ArrayList<Review> findAll();
+
 }
 
