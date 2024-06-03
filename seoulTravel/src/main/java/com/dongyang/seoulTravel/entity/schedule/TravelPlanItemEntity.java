@@ -9,17 +9,18 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@Table(name = "travel_plan_item")
 public class TravelPlanItemEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String date;
+    private String placeType;
+    private String placeId;
+
     @ManyToOne
     @JoinColumn(name = "travel_plan_id")
     private TravelPlanEntity travelPlan;
-
-    private LocalDate date;
-    private String placeType; // 음식점 명소 숙박 타입?
-    private Long placeId;
 }
