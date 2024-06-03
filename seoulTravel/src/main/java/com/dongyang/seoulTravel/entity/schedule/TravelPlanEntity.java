@@ -10,6 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Table(name = "travel_plan")
 public class TravelPlanEntity {
 
     @Id
@@ -23,5 +24,3 @@ public class TravelPlanEntity {
     @OneToMany(mappedBy = "travelPlan", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TravelPlanItemEntity> items;
 }
-
-

@@ -1,14 +1,14 @@
 package com.dongyang.seoulTravel.dto.schedule;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
+@NoArgsConstructor
 @Getter
 @Setter
 public class TravelPlanItemDto {
-    private LocalDate date;
+    private String date;
     private String placeType;
-    private Long placeId;
+    private String placeId;
 }
