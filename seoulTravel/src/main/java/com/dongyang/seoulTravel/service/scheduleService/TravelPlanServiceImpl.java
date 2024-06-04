@@ -69,7 +69,9 @@ public class TravelPlanServiceImpl implements TravelPlanService {
         return convertToDto(travelPlanEntity);
     }
 
+    //------------------------------------------
     // 여행 계획 수정
+    // -> 수정 시 기존의 데이터 전부 가져온 다음에 부분부분이 삭제 혹은 수정될 수 있움
     @Override
     public void updateTravelPlan(Long id, TravelPlanDto travelPlanDto) {
         TravelPlanEntity travelPlanEntity = travelPlanRepository.findById(id)
@@ -124,7 +126,6 @@ public class TravelPlanServiceImpl implements TravelPlanService {
                 accommodationEntity.setTravelPlan(travelPlanEntity);
                 travelPlanEntity.getAccommodations().add(accommodationEntity);
             }
-
 
             // 항목 업데이트
             accommodationEntity.setAccommodationId(accDto.getAccommodationId());
