@@ -23,4 +23,8 @@ public class TravelPlanEntity {
 
     @OneToMany(mappedBy = "travelPlan", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TravelPlanItemEntity> items;
+
+    // 숙소 정보와 기간 추가
+    @OneToMany(mappedBy = "travelPlan", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AccommodationPeriodEntity> accommodations;
 }

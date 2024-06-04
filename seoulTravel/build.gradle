@@ -40,6 +40,9 @@ dependencies {
 	/*Kakao API 의존성 추가 -- JUnit 5 + Mockito*/
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mockito:mockito-core'
+
+	/*swagger 의존성 추가 -- 잘 모르겠음 추후에 작동*/
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 }
 
 tasks.named('test') {
