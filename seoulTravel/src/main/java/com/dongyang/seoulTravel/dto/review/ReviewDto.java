@@ -2,7 +2,6 @@ package com.dongyang.seoulTravel.dto.review;
 
 
 import com.dongyang.seoulTravel.entity.review.Review;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 
