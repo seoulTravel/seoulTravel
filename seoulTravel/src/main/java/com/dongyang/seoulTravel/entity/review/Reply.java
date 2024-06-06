@@ -1,7 +1,7 @@
 package com.dongyang.seoulTravel.entity.review;
 
 import com.dongyang.seoulTravel.dto.review.CommentDto;
-import com.dongyang.seoulTravel.dto.review.DetailReviewDto;
+import com.dongyang.seoulTravel.dto.review.ReplyDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,13 +15,15 @@ import java.time.Instant;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comment {
+
+public class Reply {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer comment_id;
+    private Integer reply_id;
     @ManyToOne
-    @JoinColumn(name="review_id")
-    private Review review;
+    @JoinColumn(name="comment_id")
+    private Comment comment;
     @Column
     private Integer user_num;
     @Column
@@ -32,24 +34,24 @@ public class Comment {
     protected void onCreate() {
         this.timestamp = Instant.now();
     }
-    //별점, 사진파일 추가
+    //사진파일추가
 
 
-    public static Comment createComment(CommentDto dto, Review review) {
-        if (dto.getReview_id() != review.getReview_id())
+    public static Reply createReply(ReplyDto dto, Comment comment) {
+        if (dto.getComment_id() != comment.getComment_id())
             throw new IllegalArgumentException("상위문서 없음");
 
-        return new Comment(
-                dto.getComment_id(),
-                review,
+        return new Reply(
+                dto.getReply_id(),
+                comment,
                 dto.getUser_num(),
                 dto.getComment_text(),
                 dto.getTimestamp()
         );
     }
-    public void patch(CommentDto dto) {
+    public void patch(ReplyDto dto) {
 
-        if (this.comment_id != dto.getComment_id())
+        if (this.reply_id != dto.getReply_id())
             throw new IllegalArgumentException("잘못된 댓글 주소");
         if (dto.getUser_num() != null)
             this.user_num = dto.getUser_num();
@@ -59,7 +61,4 @@ public class Comment {
             this.timestamp = dto.getTimestamp();
 
     }
-
-
-
 }
