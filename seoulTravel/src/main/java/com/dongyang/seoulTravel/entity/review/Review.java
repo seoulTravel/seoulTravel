@@ -35,13 +35,13 @@ public class Review {
         this.timestamp = Instant.now();
     }
     @Column
-    private Instant review_hits;
+    private Integer review_hits;
     @Column
-    private Instant review_scraps;
+    private Integer review_scraps;
     @Column
-    private Instant review_likes;
+    private Integer review_likes;
     @Column
-    private Instant review_Comments;
+    private Integer review_Comments;
 
     //태그데이터, 사진 추가
 
