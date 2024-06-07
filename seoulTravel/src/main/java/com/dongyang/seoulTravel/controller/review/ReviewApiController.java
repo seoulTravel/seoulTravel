@@ -1,9 +1,11 @@
 package com.dongyang.seoulTravel.controller.review;
 
 import com.dongyang.seoulTravel.dto.review.ReviewDto;
+import com.dongyang.seoulTravel.dto.schedule.PlaceDto;
 import com.dongyang.seoulTravel.entity.review.Review;
 import com.dongyang.seoulTravel.repository.review.ReviewRepository;
 import com.dongyang.seoulTravel.service.review.ReviewService;
+import com.dongyang.seoulTravel.service.scheduleService.PlaceApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,18 +17,35 @@ import java.util.List;
 @RestController
 public class ReviewApiController {
 
+    private final ReviewService reviewService;
+    
+    // 장소 검색이 가능하게 추가
+    private final PlaceApiService placeApiService;
+
     @Autowired
-    private ReviewService reviewService;
+    public ReviewApiController(ReviewService reviewService, PlaceApiService placeApiService) {
+        this.reviewService = reviewService;
+        this.placeApiService = placeApiService;
+    }
 
     //리스트
     @GetMapping("/reviews")
     public List<Review> index(){
         return reviewService.index();
     }
+
+    // 리뷰 작성 시 모든 장소 정보 가져오기
+    @GetMapping("/places")
+    public List<PlaceDto> getAllPlacesForReview() {
+        return placeApiService.getAllPlaces();
+    }
+
     //상세
     @GetMapping("/reviews/{review_id}")
     public Review show(@PathVariable Integer review_id) {
         return reviewService.show(review_id);    }
+
+
     //작성
     @PostMapping("/reviews")
     public ResponseEntity<Review> create(@RequestBody ReviewDto dto) {
