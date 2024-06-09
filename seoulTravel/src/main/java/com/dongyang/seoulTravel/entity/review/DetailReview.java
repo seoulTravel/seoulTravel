@@ -30,7 +30,9 @@ public class DetailReview {
     private String detail_comment;
     @Column
     private Integer detail_rating;
-    //사진 컬람 추가하기
+
+    // 사진 목록 추가
+
 
     public static DetailReview createDetailReview(DetailReviewDto dto, Review review) {
         if (dto.getReview_id() != review.getReview_id())
