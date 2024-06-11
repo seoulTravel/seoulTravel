@@ -1,9 +1,9 @@
-package com.example.firstproject.service;
+package com.dongyang.seoulTravel.service.member;
 
-import com.example.firstproject.dto.JoinRequest;
-import com.example.firstproject.dto.LoginRequest;
-import com.example.firstproject.entity.User;
-import com.example.firstproject.repository.UserRepository;
+import com.dongyang.seoulTravel.dto.member.JoinRequest;
+import com.dongyang.seoulTravel.dto.member.LoginRequest;
+import com.dongyang.seoulTravel.entity.member.User;
+import com.dongyang.seoulTravel.repository.member.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

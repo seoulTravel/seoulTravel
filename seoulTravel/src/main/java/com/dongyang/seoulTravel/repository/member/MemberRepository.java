@@ -1,6 +1,6 @@
-package com.example.firstproject.repository;
+package com.dongyang.seoulTravel.repository.member;
 
-import com.example.firstproject.entity.Member;
+import com.dongyang.seoulTravel.entity.member.Member;
 import org.springframework.data.repository.CrudRepository;
 
 public interface MemberRepository extends CrudRepository<Member, Long> {

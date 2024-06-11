@@ -1,8 +1,8 @@
-package com.example.firstproject.service;
+package com.dongyang.seoulTravel.service.member;
 
-import com.example.firstproject.entity.User;
-import com.example.firstproject.entity.UserRole;
-import com.example.firstproject.repository.UserRepository;
+import com.dongyang.seoulTravel.entity.member.User;
+import com.dongyang.seoulTravel.entity.member.UserRole;
+import com.dongyang.seoulTravel.repository.member.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
-package com.example.firstproject.repository;
+package com.dongyang.seoulTravel.repository.member;
 
-import com.example.firstproject.entity.Article;
+import com.dongyang.seoulTravel.entity.member.Article;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.ArrayList;

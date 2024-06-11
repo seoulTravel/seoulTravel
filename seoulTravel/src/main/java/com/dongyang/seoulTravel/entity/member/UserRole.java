@@ -1,4 +1,4 @@
-package com.example.firstproject.entity;
+package com.dongyang.seoulTravel.entity.member;
 
 public enum UserRole {
     USER, ADMIN;

@@ -1,4 +1,4 @@
-package com.example.firstproject.entity;
+package com.dongyang.seoulTravel.entity.member;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

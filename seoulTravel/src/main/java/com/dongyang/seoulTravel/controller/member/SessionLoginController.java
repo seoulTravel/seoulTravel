@@ -1,10 +1,10 @@
-package com.example.firstproject.controller;
+package com.dongyang.seoulTravel.controller.member;
 
-import com.example.firstproject.dto.JoinRequest;
-import com.example.firstproject.dto.LoginRequest;
-import com.example.firstproject.entity.User;
-import com.example.firstproject.entity.UserRole;
-import com.example.firstproject.service.UserService;
+import com.dongyang.seoulTravel.dto.member.JoinRequest;
+import com.dongyang.seoulTravel.dto.member.LoginRequest;
+import com.dongyang.seoulTravel.entity.member.User;
+import com.dongyang.seoulTravel.entity.member.UserRole;
+import com.dongyang.seoulTravel.service.member.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

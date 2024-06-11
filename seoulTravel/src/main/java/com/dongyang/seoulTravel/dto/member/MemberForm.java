@@ -1,6 +1,6 @@
-package com.example.firstproject.dto;
+package com.dongyang.seoulTravel.dto.member;
 
-import com.example.firstproject.entity.Member;
+import com.dongyang.seoulTravel.entity.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 @AllArgsConstructor

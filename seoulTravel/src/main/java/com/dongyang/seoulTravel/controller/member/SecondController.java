@@ -1,4 +1,4 @@
-package com.example.firstproject.controller;
+package com.dongyang.seoulTravel.controller.member;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
