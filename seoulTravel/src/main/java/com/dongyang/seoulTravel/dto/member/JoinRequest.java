@@ -1,7 +1,7 @@
-package com.example.firstproject.dto;
+package com.dongyang.seoulTravel.dto.member;
 
-import com.example.firstproject.entity.User;
-import com.example.firstproject.entity.UserRole;
+import com.dongyang.seoulTravel.entity.member.User;
+import com.dongyang.seoulTravel.entity.member.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,8 +1,8 @@
-package com.example.firstproject.controller;
+package com.dongyang.seoulTravel.controller.member;
 
-import com.example.firstproject.dto.MemberForm;
-import com.example.firstproject.entity.Member;
-import com.example.firstproject.repository.MemberRepository;
+import com.dongyang.seoulTravel.dto.member.MemberForm;
+import com.dongyang.seoulTravel.entity.member.Member;
+import com.dongyang.seoulTravel.repository.member.MemberRepository;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

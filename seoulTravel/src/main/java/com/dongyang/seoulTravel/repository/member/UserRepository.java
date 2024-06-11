@@ -1,6 +1,6 @@
-package com.example.firstproject.repository;
+package com.dongyang.seoulTravel.repository.member;
 
-import com.example.firstproject.entity.User;
+import com.dongyang.seoulTravel.entity.member.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

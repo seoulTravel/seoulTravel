@@ -1,4 +1,4 @@
-package com.example.firstproject.dto;
+package com.dongyang.seoulTravel.dto.member;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

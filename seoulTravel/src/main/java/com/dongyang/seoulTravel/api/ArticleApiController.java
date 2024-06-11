@@ -1,8 +1,8 @@
-package com.example.firstproject.api;
+package com.dongyang.seoulTravel.api;
 
-import com.example.firstproject.dto.ArticleForm;
-import com.example.firstproject.entity.Article;
-import com.example.firstproject.repository.ArticleRepository;
+import com.dongyang.seoulTravel.dto.member.ArticleForm;
+import com.dongyang.seoulTravel.entity.member.Article;
+import com.dongyang.seoulTravel.repository.member.ArticleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
