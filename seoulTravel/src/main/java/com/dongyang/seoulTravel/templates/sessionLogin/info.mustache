@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 </title>
+</head>
+<body>
+
+<h1>유저 정보</h1>
+<br/>
+{{#user}}
+<div>
+    <div> PK: {{user.Id}}</div>
+    <div> 아이디: {{user.loginId}}</div>
+    <div> 닉네임: {{user.nickname}}</div>
+    <div> 역할 : {{user.role}}</div>
+</div>
+{{/user}}
+
+
+</body>
+</html>
