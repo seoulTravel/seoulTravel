@@ -7,8 +7,8 @@ export const ENDPOINTS = {
   GET_RESTAURANTS: `${BASE_URL}/restaurants`,
   GET_RESTAURANT_SEARCH: `${BASE_URL}/restaurants/search`,
   GET_PLACES: `${BASE_URL}/places`,
-  GET_ACOMMODATIONS: `${BASE_URL}/accommodations`,
-  GET_ACOMMODATION_SEARCH: `${BASE_URL}/accommodations/search`,
+  GET_ACCOMMODATIONS: `${BASE_URL}/accommodations`,
+  GET_ACCOMMODATION_SEARCH: `${BASE_URL}/accommodations/search`,
 
   GET_TRAVELPLANS: (id: number) => `${BASE_URL}/travelplans/${id}`,
   PUT_TRAVELPLANS: (id: number) => `${BASE_URL}/travelplans/${id}`,

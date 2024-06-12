@@ -33,3 +33,22 @@ export const getTravelPlan = async (id: number) => {
   }
 };
 
+export const getAccommodations = async () => {
+  try {
+    const response = await apiClient.get(ENDPOINTS.GET_ACCOMMODATIONS);
+    return response.data;
+  } catch (error) {
+    console.error('API 요청 중 오류 발생:', error);
+    throw error;
+  }
+}
+
+export const getRestaurants = async () => {
+  try {
+    const response = await apiClient.get(ENDPOINTS.GET_RESTAURANTS);
+    return response.data;
+  } catch (error) {
+    console.error('API 요청 중 오류 발생:', error);
+    throw error;
+  }
+}

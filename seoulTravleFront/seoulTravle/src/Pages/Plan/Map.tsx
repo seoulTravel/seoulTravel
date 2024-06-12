@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Modal, DatePicker, Button, Input } from 'antd';
+import { Modal, DatePicker, Button, Input, List, Pagination } from 'antd';
 import moment, { Moment } from 'moment';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import KakaoMap from '../../components/KakaoMap';
 import { motion } from 'framer-motion';
-import { getSpots } from '../../api/apiFunctions'; // API 호출 함수 임포트
+import { getSpots, getAccommodations, getRestaurants } from '../../api/apiFunctions'; // API 호출 함수 임포트
 
 interface TravelPlanItem {
   date: string;
@@ -28,23 +28,30 @@ interface TravelPlan {
 }
 
 const Map: React.FC = () => {
-  const [places, setPlaces] = useState<any[]>([]); // 초기 상태를 빈 배열로 설정
+  const [places, setPlaces] = useState<any[]>([]);
+  const [accommodations, setAccommodations] = useState<any[]>([]);
+  const [restaurants, setRestaurants] = useState<any[]>([]);
   const [selectedCoords, setSelectedCoords] = useState<{ lat: number, lng: number } | null>(null);
   const [planName, setPlanName] = useState('');
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
   const [items, setItems] = useState<TravelPlanItem[]>([]);
-  const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
-  const [modalVisible, setModalVisible] = useState(true); // 처음에 모달이 보이도록 설정
+  const [selectedAccommodations, setSelectedAccommodations] = useState<Accommodation[]>([]);
+  const [modalVisible, setModalVisible] = useState(true);
+
+  // 페이지네이션 상태
+  const [accommodationPage, setAccommodationPage] = useState(1);
+  const [restaurantPage, setRestaurantPage] = useState(1);
+  const itemsPerPage = 5; // 페이지당 항목 수
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getSpots();
-        if (Array.isArray(data)) {
-          setPlaces(data);
+        const spotData = await getSpots();
+        if (Array.isArray(spotData)) {
+          setPlaces(spotData);
         } else {
-          console.error('API 응답이 배열이 아닙니다:', data);
+          console.error('API 응답이 배열이 아닙니다:', spotData);
         }
       } catch (error) {
         console.error('데이터 가져오기 중 오류 발생:', error);
@@ -54,9 +61,28 @@ const Map: React.FC = () => {
     fetchData();
   }, []);
 
+  const fetchAccommodationsAndRestaurants = async () => {
+    if (startDate && endDate) {
+      try {
+        const accommodationData = await getAccommodations();
+        const restaurantData = await getRestaurants();
+        if (Array.isArray(accommodationData)) {
+          setAccommodations(accommodationData);
+        }
+        if (Array.isArray(restaurantData)) {
+          setRestaurants(restaurantData);
+        }
+      } catch (error) {
+        console.error('데이터 가져오기 중 오류 발생:', error);
+      }
+    }
+  };
+
   useEffect(() => {
-    setModalVisible(true);
-  }, []);
+    if (startDate && endDate) {
+      fetchAccommodationsAndRestaurants();
+    }
+  }, [startDate, endDate]);
 
   const handleStartDateChange = (date: Moment | null) => {
     setStartDate(date ? date.format('YYYY-MM-DD') : null);
@@ -78,13 +104,33 @@ const Map: React.FC = () => {
     setPlanName(e.target.value);
   };
 
+  const handleAddAccommodation = (accommodationId: string) => {
+    if (startDate && endDate) {
+      const newAccommodation: Accommodation = {
+        accommodationId,
+        startDate,
+        endDate,
+      };
+      setSelectedAccommodations([...selectedAccommodations, newAccommodation]);
+    }
+  };
+
+  const handleAddItem = (date: string, placeType: string, placeId: string) => {
+    const newItem: TravelPlanItem = {
+      date,
+      placeType,
+      placeId,
+    };
+    setItems([...items, newItem]);
+  };
+
   const handleSubmit = async () => {
     const travelPlan: TravelPlan = {
       planName,
       startDate: startDate || '',
       endDate: endDate || '',
       items,
-      accommodations,
+      accommodations: selectedAccommodations,
     };
 
     try {
@@ -131,6 +177,24 @@ const Map: React.FC = () => {
     return cleaned.trim();
   };
 
+  const handleAccommodationPageChange = (page: number) => {
+    setAccommodationPage(page);
+  };
+
+  const handleRestaurantPageChange = (page: number) => {
+    setRestaurantPage(page);
+  };
+
+  const paginatedAccommodations = accommodations.slice(
+    (accommodationPage - 1) * itemsPerPage,
+    accommodationPage * itemsPerPage
+  );
+
+  const paginatedRestaurants = restaurants.slice(
+    (restaurantPage - 1) * itemsPerPage,
+    restaurantPage * itemsPerPage
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -167,19 +231,61 @@ const Map: React.FC = () => {
       </Modal>
       <div className="flex flex-grow overflow-hidden">
         <Sidebar places={places} onHover={handleMouseEnter} />
-        <div className="map flex-grow relative">
-          <KakaoMap coords={selectedCoords} />
+        <div className="flex flex-row flex-grow relative">
+          <div className="map flex-grow relative">
+            <KakaoMap coords={selectedCoords} />
+          </div>
+          <div className="flex flex-col w-1/3 p-4 overflow-y-auto">
+            <h3>숙박 정보</h3>
+            <List
+              bordered
+              dataSource={paginatedAccommodations}
+              renderItem={(item: any) => (
+                <List.Item onClick={() => handleAddAccommodation(item.id)}>
+                  {item.name}
+                </List.Item>
+              )}
+              style={{ marginBottom: '20px' }}
+            />
+            <Pagination
+              current={accommodationPage}
+              pageSize={itemsPerPage}
+              total={accommodations.length}
+              onChange={handleAccommodationPageChange}
+              style={{ textAlign: 'center', marginBottom: '20px' }}
+            />
+            <h3>식당 정보</h3>
+            <List
+              bordered
+              dataSource={paginatedRestaurants}
+              renderItem={(item: any) => (
+                <List.Item onClick={() => handleAddItem(startDate || '', 'restaurant', item.id)}>
+                  {item.name}
+                </List.Item>
+              )}
+              style={{ marginBottom: '20px' }}
+            />
+            <Pagination
+              current={restaurantPage}
+              pageSize={itemsPerPage}
+              total={restaurants.length}
+              onChange={handleRestaurantPageChange}
+              style={{ textAlign: 'center', marginBottom: '20px' }}
+            />
+          </div>
         </div>
       </div>
-      <Input
-        placeholder="Enter plan name"
-        value={planName}
-        onChange={handlePlanNameChange}
-        style={{ margin: '20px' }}
-      />
-      <Button type="primary" onClick={handleSubmit} style={{ margin: '20px' }}>
-        Submit Travel Plan
-      </Button>
+      <div className="p-4">
+        <Input
+          placeholder="Enter plan name"
+          value={planName}
+          onChange={handlePlanNameChange}
+          style={{ marginBottom: '20px' }}
+        />
+        <Button type="primary" onClick={handleSubmit}>
+          Submit Travel Plan
+        </Button>
+      </div>
     </motion.div>
   );
 };
