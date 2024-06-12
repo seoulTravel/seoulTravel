@@ -85,11 +85,13 @@ const Map: React.FC = () => {
   }, [startDate, endDate]);
 
   const handleStartDateChange = (date: Moment | null) => {
-    setStartDate(date ? date.format('YYYY-MM-DD') : null);
+    const formattedDate = date ? date.format('YYYY-MM-DD') : null;
+    setStartDate(formattedDate);
   };
 
   const handleEndDateChange = (date: Moment | null) => {
-    setEndDate(date ? date.format('YYYY-MM-DD') : null);
+    const formattedDate = date ? date.format('YYYY-MM-DD') : null;
+    setEndDate(formattedDate);
   };
 
   const handleModalOk = () => {
@@ -111,7 +113,8 @@ const Map: React.FC = () => {
         startDate,
         endDate,
       };
-      setSelectedAccommodations([...selectedAccommodations, newAccommodation]);
+      const updatedAccommodations = [...selectedAccommodations, newAccommodation];
+      setSelectedAccommodations(updatedAccommodations);
     }
   };
 
@@ -121,7 +124,8 @@ const Map: React.FC = () => {
       placeType,
       placeId,
     };
-    setItems([...items, newItem]);
+    const updatedItems = [...items, newItem];
+    setItems(updatedItems);
   };
 
   const handleSubmit = async () => {
