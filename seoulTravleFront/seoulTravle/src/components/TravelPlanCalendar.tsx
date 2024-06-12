@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Modal, DatePicker, Button, Input } from 'antd';
 import moment, { Moment } from 'moment';
-import Sidebar from '../../components/Sidebar';
-import Header from '../../components/Header';
-import KakaoMap from '../../components/KakaoMap';
-import { motion } from 'framer-motion';
-import { getSpots } from '../../api/apiFunctions'; // API 호출 함수 임포트
+import 'antd/dist/antd.css';
 
 interface TravelPlanItem {
   date: string;
@@ -27,32 +23,13 @@ interface TravelPlan {
   accommodations: Accommodation[];
 }
 
-const Map: React.FC = () => {
-  const [places, setPlaces] = useState<any[]>([]); // 초기 상태를 빈 배열로 설정
-  const [selectedCoords, setSelectedCoords] = useState<{ lat: number, lng: number } | null>(null);
+const TravelPlanPage: React.FC = () => {
   const [planName, setPlanName] = useState('');
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
   const [items, setItems] = useState<TravelPlanItem[]>([]);
   const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
   const [modalVisible, setModalVisible] = useState(true); // 처음에 모달이 보이도록 설정
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getSpots();
-        if (Array.isArray(data)) {
-          setPlaces(data);
-        } else {
-          console.error('API 응답이 배열이 아닙니다:', data);
-        }
-      } catch (error) {
-        console.error('데이터 가져오기 중 오류 발생:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
     setModalVisible(true);
@@ -105,41 +82,8 @@ const Map: React.FC = () => {
     }
   };
 
-  const handleMouseEnter = (address: string) => {
-    const cleanedAddress = cleanAddress(address);
-    const kakao = (window as any).kakao;
-    const geocoder = new kakao.maps.services.Geocoder();
-
-    geocoder.addressSearch(cleanedAddress, (result: any, status: any) => {
-      if (status === kakao.maps.services.Status.OK) {
-        const coords = {
-          lat: parseFloat(result[0].y),
-          lng: parseFloat(result[0].x),
-        };
-        setSelectedCoords(coords);
-      } else {
-        console.error('Geocode was not successful for the following reason: ' + status);
-        setSelectedCoords(null);
-      }
-    });
-  };
-
-  const cleanAddress = (address: string): string => {
-    let cleaned = address.replace(/^\d{5}\s/, '');
-    cleaned = cleaned.replace(/\(.*?\)/g, '');
-    cleaned = cleaned.replace(/\d+층/g, '');
-    return cleaned.trim();
-  };
-
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: .5 }}
-      className="w-screen h-screen flex flex-col"
-    >
-      <Header />
+    <div>
       <Modal
         title="여행 날짜 선택"
         visible={modalVisible}
@@ -165,23 +109,19 @@ const Map: React.FC = () => {
           style={{ display: 'block', marginBottom: '10px' }}
         />
       </Modal>
-      <div className="flex flex-grow overflow-hidden">
-        <Sidebar places={places} onHover={handleMouseEnter} />
-        <div className="map flex-grow relative">
-          <KakaoMap coords={selectedCoords} />
-        </div>
-      </div>
+
       <Input
         placeholder="Enter plan name"
         value={planName}
         onChange={handlePlanNameChange}
-        style={{ margin: '20px' }}
+        style={{ marginBottom: 20 }}
       />
-      <Button type="primary" onClick={handleSubmit} style={{ margin: '20px' }}>
+      <Calendar />
+      <Button type="primary" onClick={handleSubmit} style={{ marginTop: 20 }}>
         Submit Travel Plan
       </Button>
-    </motion.div>
+    </div>
   );
 };
 
-export default Map;
+export default TravelPlanPage;
