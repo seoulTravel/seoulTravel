@@ -1,5 +1,6 @@
 package com.dongyang.seoulTravel.service.scheduleService;
 
+import com.dongyang.seoulTravel.dto.schedule.PlaceDto;
 import com.dongyang.seoulTravel.dto.schedule.TravelPlanDto;
 import com.dongyang.seoulTravel.dto.schedule.TravelPlanItemDto;
 import com.dongyang.seoulTravel.dto.schedule.AccommodationPeriodDto;
@@ -20,6 +21,18 @@ public class TravelPlanServiceImpl implements TravelPlanService {
 
     @Autowired
     private TravelPlanRepository travelPlanRepository;
+
+    @Autowired
+    private PlaceApiService placeApiService;
+
+    @Autowired
+    private RestaurantApiService restaurantApiService;
+
+    @Autowired
+    private AccommodationApiService accommodationApiService;
+
+    @Autowired
+    private SpotApiService spotApiService;
 
     // 여행 계획 생성
     @Override
@@ -175,5 +188,38 @@ public class TravelPlanServiceImpl implements TravelPlanService {
         travelPlanDto.setItems(items);
         travelPlanDto.setAccommodations(accommodations);
         return travelPlanDto;
+    }
+
+
+
+    // 최단거리 알고리즘
+    public List<PlaceDto> optimizeTravelPlan(Long travelPlanId) {
+        TravelPlanEntity travelPlanEntity = travelPlanRepository.findById(travelPlanId)
+                .orElseThrow(() -> new RuntimeException("Travel plan id를 찾을 수 없음 " + travelPlanId));
+
+        List<PlaceDto> places = travelPlanEntity.getItems().stream().map(item -> {
+            PlaceDto placeDto = null;
+            try {
+                switch (item.getPlaceType()) {
+                    case "accommodation":
+                        placeDto = accommodationApiService.getAccommodationById(item.getPlaceId());
+                        break;
+                    case "restaurant":
+                        placeDto = restaurantApiService.getRestaurantById(item.getPlaceId());
+                        break;
+                    case "spot":
+                        placeDto = spotApiService.getSpotById(item.getPlaceId());
+                        break;
+                    default:
+                        throw new RuntimeException("Unknown place type: " + item.getPlaceType());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("Place id를 찾을 수 없음: " + item.getPlaceId(), e);
+            }
+            return placeDto;
+        }).collect(Collectors.toList());
+
+        return placeApiService.optimizeTravelPlan(places);
     }
 }
