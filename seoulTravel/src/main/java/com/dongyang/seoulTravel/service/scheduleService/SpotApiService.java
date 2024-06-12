@@ -82,4 +82,14 @@ public class SpotApiService {
                 })
                 .collect(Collectors.toList());
     }
+
+
+    // 최단거리
+    public SpotDto getSpotById(String id) throws Exception {
+        List<SpotDto> spots = getAllSpots();
+        return spots.stream()
+                .filter(spot -> spot.getSpotPostSn().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new Exception("Spot id를 찾을 수 없음: " + id));
+    }
 }

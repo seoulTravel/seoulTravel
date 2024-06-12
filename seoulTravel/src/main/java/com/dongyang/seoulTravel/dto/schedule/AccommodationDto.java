@@ -45,4 +45,14 @@ public class AccommodationDto implements PlaceDto{
         return accoBplcnm;
     }
 
+    @Override
+    public String getLatitude() {
+        return latitude;
+    }
+
+    @Override
+    public String getLongitude() {
+        return longitude;
+    }
+
 }

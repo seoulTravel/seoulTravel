@@ -85,4 +85,14 @@ public class RestaurantApiService {
                 })
                 .collect(Collectors.toList());
     }
+
+
+    // 최단거리
+    public RestaurantDto getRestaurantById(String id) throws Exception {
+        List<RestaurantDto> restaurants = getAllRestaurant();
+        return restaurants.stream()
+                .filter(rest -> rest.getRestauPostSn().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new Exception("Restaurant id를 찾을 수 없음: " + id));
+    }
 }

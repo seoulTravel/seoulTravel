@@ -37,10 +37,27 @@ public class RestaurantDto implements PlaceDto{
     @JsonProperty("TAG")
     private String restauTag;
 
+    // 최단 거리 알고리즘 구현용
+    //--------------------------------------------
+    @JsonProperty("X") // 좌표정보 - 경도
+    private String longitude;
+
+    @JsonProperty("Y") // 좌표정보 - 위도
+    private String latitude;
 
     @Override
     public String getName() {
         return restauPostSj;
+    }
+
+    @Override
+    public String getLatitude() {
+        return latitude;
+    }
+
+    @Override
+    public String getLongitude() {
+        return longitude;
     }
 
 

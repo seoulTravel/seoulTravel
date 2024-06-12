@@ -77,4 +77,14 @@ public class AccommodationApiService {
                 })
                 .collect(Collectors.toList());
     }
+
+    // 최단거리
+    public AccommodationDto getAccommodationById(String id) throws Exception {
+        List<AccommodationDto> accommodations = getAllAccommodation();
+        return accommodations.stream()
+                .filter(acc -> acc.getAccoMgtNo().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new Exception("Accommodation id를 찾을 수 없음: " + id));
+    }
+
 }
