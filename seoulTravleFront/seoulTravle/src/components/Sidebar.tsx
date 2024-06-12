@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface Place {
     name: string;
@@ -29,6 +29,10 @@ const cleanAddress = (address: string): string => {
 const Sidebar: React.FC<SidebarProps> = ({ places, onHover }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredPlaces, setFilteredPlaces] = useState<Place[]>(places);
+
+    useEffect(() => {
+        setFilteredPlaces(places);
+    }, [places]);
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = event.target.value.toLowerCase();
