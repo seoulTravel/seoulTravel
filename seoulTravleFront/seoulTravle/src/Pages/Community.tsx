@@ -5,7 +5,6 @@ import {
   updateReview,
   addHitsScrapsLikes,
   addCommentToReview,
-  deleteComment,
   Review,
   Comment,
 } from '../api/reviewApi';
@@ -46,13 +45,13 @@ const Community: React.FC = () => {
   };
 
   const handleUpdateReview = async (id: number) => {
-    console.log('Updating review with id:', id);
-    const updatedReview = await updateReview(id, { review_comment: 'Updated comment' });
+    console.log('리뷰 업데이트 중:', id);
+    const updatedReview = await updateReview(id, { review_comment: '업데이트된 댓글' });
     setReviews(reviews.map(review => (review.review_id === id ? updatedReview : review)));
   };
 
   const handleAddHitsScrapsLikes = async (id: number) => {
-    console.log('Adding hits, scraps, and likes to review with id:', id);
+    console.log('조회수, 스크랩, 좋아요 추가 중:', id);
     const updatedReview = await addHitsScrapsLikes(id, {
       review_hits: 1,
       review_likes: 1,
@@ -66,14 +65,14 @@ const Community: React.FC = () => {
 
   const handleAddComment = async (reviewId: number) => {
     const comment = newComment[reviewId];
-    console.log('Adding comment to review with id:', reviewId);
+    console.log('댓글 추가 중:', reviewId);
     const commentData = {
       review_id: reviewId,
-      user_num: 0, // 사용자 번호는 실제 데이터로 대체해야 함
+      user_num: 0, // 실제 사용자 번호로 대체해야 함
       comment_text: comment,
     };
     const addedComment = await addCommentToReview(reviewId, commentData);
-    console.log('Added comment:', addedComment);
+    console.log('추가된 댓글:', addedComment);
 
     setReviews(reviews.map(review => 
       review.review_id === reviewId 
@@ -81,12 +80,6 @@ const Community: React.FC = () => {
         : review
     ));
     setNewComment({ ...newComment, [reviewId]: '' });
-  };
-
-  const handleDeleteComment = async (commentId: number) => {
-    console.log('Deleting comment with id:', commentId);
-    await deleteComment(commentId);
-    // 댓글 삭제 후 데이터 갱신
   };
 
   return (
@@ -100,32 +93,32 @@ const Community: React.FC = () => {
               <h2 className="text-2xl font-semibold mb-2">{review.review_title}</h2>
               <p className="text-gray-700 mb-4">{review.review_comment}</p>
               <div className="text-sm text-gray-500 mb-4">
-                <p>Rating: {review.review_rating} / 5</p>
-                <p>By User: {review.user_num}</p>
-                <p>Date: {new Date(review.timestamp).toLocaleDateString()}</p>
+                <p>평점: {review.review_rating} / 5</p>
+                <p>사용자 번호: {review.user_num}</p>
+                <p>날짜: {new Date(review.timestamp).toLocaleDateString()}</p>
               </div>
               <div className="flex space-x-4 mb-4">
-                <span>Hits: {review.review_hits}</span>
-                <span>Scraps: {review.review_scraps}</span>
-                <span>Likes: {review.review_likes}</span>
-                <span>Comments: {review.review_comments}</span>
+                <span>조회수: {review.review_hits}</span>
+                <span>스크랩: {review.review_scraps}</span>
+                <span>좋아요: {review.review_likes}</span>
+                <span>댓글 수: {review.review_comments}</span>
               </div>
               <button
                 onClick={() => handleUpdateReview(review.review_id)}
                 className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
               >
-                Update Review
+                리뷰 업데이트
               </button>
               <button
                 onClick={() => handleAddHitsScrapsLikes(review.review_id)}
                 className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
               >
-                Add Hits & Likes
+                조회수 & 좋아요 추가
               </button>
               <div className="mt-4">
                 <input
                   type="text"
-                  placeholder="Enter comment"
+                  placeholder="댓글 입력"
                   value={newComment[review.review_id] || ''}
                   onChange={(e) => handleCommentChange(review.review_id, e.target.value)}
                   className="w-full p-2 mb-2 border rounded"
@@ -134,15 +127,15 @@ const Community: React.FC = () => {
                   onClick={() => handleAddComment(review.review_id)}
                   className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                 >
-                  Add Comment
+                  댓글 추가
                 </button>
               </div>
               <div className="mt-4 space-y-2">
                 {review.comments && review.comments.map((comment: Comment) => (
                   <div key={comment.comment_id} className="bg-gray-100 p-2 rounded shadow-sm">
                     <p>{comment.comment_text}</p>
-                    <p className="text-sm text-gray-500">By User: {comment.user_num}</p>
-                    <p className="text-sm text-gray-500">Date: {new Date(comment.timestamp).toLocaleDateString()}</p>
+                    <p className="text-sm text-gray-500">사용자 번호: {comment.user_num}</p>
+                    <p className="text-sm text-gray-500">날짜: {new Date(comment.timestamp).toLocaleDateString()}</p>
                   </div>
                 ))}
               </div>
@@ -150,18 +143,18 @@ const Community: React.FC = () => {
           ))}
         </div>
         <div className="mt-12 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-semibold mb-4">Write a Review</h2>
+          <h2 className="text-2xl font-semibold mb-4">리뷰 작성</h2>
           <input
             type="text"
             name="review_title"
-            placeholder="Review Title"
+            placeholder="리뷰 제목"
             value={newReview.review_title}
             onChange={handleReviewChange}
             className="w-full p-2 mb-4 border rounded"
           />
           <textarea
             name="review_comment"
-            placeholder="Review Comment"
+            placeholder="리뷰 내용"
             value={newReview.review_comment}
             onChange={handleReviewChange}
             className="w-full p-2 mb-4 border rounded"
@@ -170,7 +163,7 @@ const Community: React.FC = () => {
             onClick={handleCreateReview}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
-            Submit Review
+            리뷰 제출
           </button>
         </div>
       </div>

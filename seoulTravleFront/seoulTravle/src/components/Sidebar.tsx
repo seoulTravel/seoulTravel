@@ -14,18 +14,6 @@ interface SidebarProps {
   onClick: (name: string) => void;
 }
 
-const cleanAddress = (address: string): string => {
-  // 앞의 숫자 5자리 제거
-  let cleaned = address.replace(/^\d{5}\s/, '');
-  
-  // 괄호 안의 내용 제거
-  cleaned = cleaned.replace(/\(.*?\)/g, '');
-  
-  // "~층" 정보 제거
-  cleaned = cleaned.replace(/\d+층/g, '');
-  
-  return cleaned.trim();
-}
 
 const Sidebar: React.FC<SidebarProps> = ({ places, onHover, onClick }) => {
   const [searchTerm, setSearchTerm] = useState('');

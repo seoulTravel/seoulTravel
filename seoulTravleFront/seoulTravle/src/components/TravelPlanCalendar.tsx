@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Modal, DatePicker, Button, Input } from 'antd';
-import moment, { Moment } from 'moment';
+import { Moment } from 'moment';
 import 'antd/dist/antd.css';
 
 interface TravelPlanItem {
@@ -27,8 +27,8 @@ const TravelPlanPage: React.FC = () => {
   const [planName, setPlanName] = useState('');
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
-  const [items, setItems] = useState<TravelPlanItem[]>([]);
-  const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
+  const [items] = useState<TravelPlanItem[]>([]);
+  const [accommodations] = useState<Accommodation[]>([]);
   const [modalVisible, setModalVisible] = useState(true); // 처음에 모달이 보이도록 설정
 
   useEffect(() => {

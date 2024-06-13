@@ -277,8 +277,8 @@ const Map: React.FC = () => {
     setAccommodationEndDate(formattedDate);
   };
 
-  const disabledDate = (current: Moment) => {
-    return current && current < moment().startOf('day');
+  const disabledDate = (current: Moment): boolean => {
+    return !!(current && current < moment().startOf('day'));
   };
 
   const disabledAccommodationDate = (current: Moment) => {
@@ -394,15 +394,15 @@ const Map: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="p-4">
+      <div className="p-4 flex gap-3">
         <Input
-          placeholder="Enter plan name"
+          placeholder="이 계획의 이름을 입력해주세요."
           value={planName}
           onChange={handlePlanNameChange}
           style={{ marginBottom: '20px' }}
         />
         <Button type="primary" onClick={handleSubmit}>
-          Submit Travel Plan
+          저장하기
         </Button>
       </div>
       <div className="flex overflow-x-auto p-4 bg-gray-100">
@@ -410,37 +410,30 @@ const Map: React.FC = () => {
           <div
             key={date}
             onClick={() => handleDateClick(date)}
-            className={`p-4 leading-[.2] m-2 border rounded cursor-pointer ${selectedDate === date ? 'bg-blue-300' : 'bg-white'}`}
+            className={`p-4 m-2 border rounded cursor-pointer ${selectedDate === date ? 'bg-blue-300' : 'bg-white'}`}
+            style={{ height: 'max-content', width: '300px' }} // 일정한 너비를 설정합니다.
           >
-            {date}
-          </div>
-        ))}
-      </div>
-      <div className="p-4">
-        {selectedDate && (
-          <div>
-            <h3>{selectedDate}에 선택된 장소</h3>
+            <h3>{date}</h3>
             <List
               bordered
-              dataSource={items.filter(item => item.date === selectedDate)}
+              dataSource={items.filter(item => item.date === date)}
               renderItem={(item: TravelPlanItem) => (
                 <List.Item>
                   {item.placeType}: {item.placeId}
                 </List.Item>
               )}
             />
+            <List
+              bordered
+              dataSource={selectedAccommodations.filter(accommodation => accommodation.startDate <= date && accommodation.endDate >= date)}
+              renderItem={(item: Accommodation) => (
+                <List.Item>
+                  {item.accommodationId}: {item.startDate} - {item.endDate}
+                </List.Item>
+              )}
+            />
           </div>
-        )}
-        <h3>선택된 숙박 정보</h3>
-        <List
-          bordered
-          dataSource={selectedAccommodations}
-          renderItem={(item: Accommodation) => (
-            <List.Item>
-              {item.accommodationId}: {item.startDate} - {item.endDate}
-            </List.Item>
-          )}
-        />
+        ))}
       </div>
     </motion.div>
   );
