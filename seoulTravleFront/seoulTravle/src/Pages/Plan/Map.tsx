@@ -7,6 +7,7 @@ import KakaoMap from '../../components/KakaoMap';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { getSpots, getAccommodations, getRestaurants, postTravelPlan } from '../../api/apiFunctions';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 interface TravelPlanItem {
   date: string;
@@ -46,10 +47,9 @@ const Map: React.FC = () => {
   const [accommodationEndDate, setAccommodationEndDate] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // 페이지네이션 상태
   const [accommodationPage, setAccommodationPage] = useState(1);
   const [restaurantPage, setRestaurantPage] = useState(1);
-  const itemsPerPage = 5; // 페이지당 항목 수
+  const itemsPerPage = 5;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -181,7 +181,7 @@ const Map: React.FC = () => {
 
     try {
       await postTravelPlan(travelPlan);
-      alert('Travel plan submitted successfully');
+      alert('정상적으로 저장되었어요.');
       navigate('/mypage');
     } catch (error) {
       console.error('Failed to submit travel plan');
@@ -283,6 +283,16 @@ const Map: React.FC = () => {
 
   const disabledAccommodationDate = (current: Moment) => {
     return current && (current < moment(startDate) || current > moment(endDate));
+  };
+
+  const onDragEnd = (result: any) => {
+    if (!result.destination) return;
+
+    const newItems = Array.from(items);
+    const [reorderedItem] = newItems.splice(result.source.index, 1);
+    newItems.splice(result.destination.index, 0, reorderedItem);
+
+    setItems(newItems);
   };
 
   return (
@@ -410,19 +420,36 @@ const Map: React.FC = () => {
           <div
             key={date}
             onClick={() => handleDateClick(date)}
-            className={`p-4 m-2 border rounded cursor-pointer ${selectedDate === date ? 'bg-blue-300' : 'bg-white'}`}
-            style={{ height: 'max-content', width: '300px' }} // 일정한 너비를 설정합니다.
+            className={`p-4 m-2 border rounded cursor-pointer bg-gray ${selectedDate === date ? 'shadow-xl bg-white' : ''}`}
+            style={{ height: 'max-content', width: '300px' }}
           >
             <h3>{date}</h3>
-            <List
-              bordered
-              dataSource={items.filter(item => item.date === date)}
-              renderItem={(item: TravelPlanItem) => (
-                <List.Item>
-                  {item.placeType}: {item.placeId}
-                </List.Item>
-              )}
-            />
+            <DragDropContext onDragEnd={onDragEnd}>
+              <Droppable droppableId={date}>
+                {(provided) => (
+                  <div ref={provided.innerRef} {...provided.droppableProps}>
+                    <List
+                      bordered
+                      dataSource={items.filter(item => item.date === date)}
+                      renderItem={(item, index) => (
+                        <Draggable key={item.placeId} draggableId={item.placeId} index={index}>
+                          {(provided) => (
+                            <List.Item
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              {item.placeId.replace(/^(spot|restaurant):\s*/, '')}
+                            </List.Item>
+                          )}
+                        </Draggable>
+                      )}
+                    />
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
             <List
               bordered
               dataSource={selectedAccommodations.filter(accommodation => accommodation.startDate <= date && accommodation.endDate >= date)}
