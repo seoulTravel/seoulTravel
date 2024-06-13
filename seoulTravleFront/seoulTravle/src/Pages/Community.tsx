@@ -93,7 +93,7 @@ const Community: React.FC = () => {
     <div className="bg-gray-100 min-h-screen">
       <Header />
       <div className="container mx-auto py-24">
-        <h1 className="text-4xl font-bold text-center mb-12">Community Page</h1>
+        <h1 className="text-4xl font-bold text-center mb-12">커뮤니티 공간</h1>
         <div className="space-y-8">
           {reviews.map((review) => (
             <div key={review.review_id} className="bg-white p-6 rounded-lg shadow-md">

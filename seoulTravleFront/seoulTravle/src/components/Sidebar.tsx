@@ -11,6 +11,7 @@ interface Place {
 interface SidebarProps {
   places: Place[];
   onHover: (address: string) => void;
+  onClick: (name: string) => void;
 }
 
 const cleanAddress = (address: string): string => {
@@ -26,7 +27,7 @@ const cleanAddress = (address: string): string => {
   return cleaned.trim();
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ places, onHover }) => {
+const Sidebar: React.FC<SidebarProps> = ({ places, onHover, onClick }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredPlaces, setFilteredPlaces] = useState<Place[]>(places);
 
@@ -48,6 +49,10 @@ const Sidebar: React.FC<SidebarProps> = ({ places, onHover }) => {
     onHover(address);
   }
 
+  const handleClick = (name: string) => {
+    onClick(name);
+  }
+
   return (
     <aside className="sidebar pt-20 w-64 bg-white p-4 overflow-y-auto h-screen">
       <input
@@ -62,6 +67,7 @@ const Sidebar: React.FC<SidebarProps> = ({ places, onHover }) => {
           key={index}
           className="place-card p-4 mb-4 border rounded-lg cursor-pointer hover:bg-gray-100"
           onMouseEnter={() => handleMouseEnter(place.NEW_ADDRESS)}
+          onClick={() => handleClick(place.name)}
         >
           <h3 className="text-lg font-bold">{place.name}</h3>
           <p className="text-sm text-gray-600">{place.NEW_ADDRESS}</p>

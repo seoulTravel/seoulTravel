@@ -13,8 +13,8 @@ export const ENDPOINTS = {
   GET_TRAVELPLANS: (id: number) => `${BASE_URL}/travelplans/${id}`,
   PUT_TRAVELPLANS: (id: number) => `${BASE_URL}/travelplans/${id}`,
   DEL_TRAVELPLANS: (id: number) => `${BASE_URL}/travelplans/${id}`,
-  GET_TRAVELPLANS_ALL: `${BASE_URL}/travelplans`,
-  POST_TRAVELPLANS: `${BASE_URL}/travelplans`,
+  GET_TRAVELPLANS_ALL: `${BASE_URL}/api/travelPlans`,
+  POST_TRAVELPLANS: `${BASE_URL}/api/travelPlans`,
 
   GET_REVIEWS: (id: number) => `${BASE_URL}/reviews/${id}`,
   DEL_REVIEWS: (id: number) => `${BASE_URL}/reviews/${id}`,

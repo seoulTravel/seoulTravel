@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import { AnimatePresence } from 'framer-motion';
 import Home from './Pages/Home';
 import Community from './Pages/Community';
-import Contact from './Pages/Contact';
+import MyPage from './Pages/MyPage';
 import Map from './Pages/Plan/Map'; // Import the Map component
 
 const AnimatedRoutes: React.FC = () => {
@@ -14,7 +14,7 @@ const AnimatedRoutes: React.FC = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/community" element={<Community />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/mypage" element={<MyPage />} />
         <Route path="/plan" element={<Map />} /> // Use the Map component
         <Route path="*" element={<div>Not Found</div>} />
       </Routes>
