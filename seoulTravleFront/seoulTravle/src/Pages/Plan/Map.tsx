@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, DatePicker, Button, Input, List, Pagination } from 'antd';
-import moment, { Moment } from 'moment';
+import dayjs, { Dayjs } from 'dayjs';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import KakaoMap from '../../components/KakaoMap';
@@ -107,12 +107,12 @@ const Map: React.FC = () => {
     }
   }, [startDate, endDate]);
 
-  const handleStartDateChange = (date: Moment | null) => {
+  const handleStartDateChange = (date: Dayjs | null) => {
     const formattedDate = date ? date.format('YYYY-MM-DD') : null;
     setStartDate(formattedDate);
   };
 
-  const handleEndDateChange = (date: Moment | null) => {
+  const handleEndDateChange = (date: Dayjs | null) => {
     const formattedDate = date ? date.format('YYYY-MM-DD') : null;
     setEndDate(formattedDate);
   };
@@ -234,14 +234,14 @@ const Map: React.FC = () => {
   );
 
   const generateDateRange = (start: string, end: string): string[] => {
-    const startDate = moment(start);
-    const endDate = moment(end);
+    const startDate = dayjs(start);
+    const endDate = dayjs(end);
     const dateArray: string[] = [];
 
     let currentDate = startDate;
     while (currentDate <= endDate) {
       dateArray.push(currentDate.format('YYYY-MM-DD'));
-      currentDate = currentDate.add(1, 'days');
+      currentDate = currentDate.add(1, 'day');
     }
     return dateArray;
   };
@@ -267,22 +267,22 @@ const Map: React.FC = () => {
     setAccommodationModalVisible(true);
   };
 
-  const handleAccommodationStartDateChange = (date: Moment | null) => {
+  const handleAccommodationStartDateChange = (date: Dayjs | null) => {
     const formattedDate = date ? date.format('YYYY-MM-DD') : null;
     setAccommodationStartDate(formattedDate);
   };
 
-  const handleAccommodationEndDateChange = (date: Moment | null) => {
+  const handleAccommodationEndDateChange = (date: Dayjs | null) => {
     const formattedDate = date ? date.format('YYYY-MM-DD') : null;
     setAccommodationEndDate(formattedDate);
   };
 
-  const disabledDate = (current: Moment): boolean => {
-    return !!(current && current < moment().startOf('day'));
+  const disabledDate = (current: Dayjs): boolean => {
+    return !!(current && current < dayjs().startOf('day'));
   };
 
-  const disabledAccommodationDate = (current: Moment) => {
-    return current && (current < moment(startDate) || current > moment(endDate));
+  const disabledAccommodationDate = (current: Dayjs) => {
+    return current && (current < dayjs(startDate) || current > dayjs(endDate));
   };
 
   const onDragEnd = (result: any) => {
