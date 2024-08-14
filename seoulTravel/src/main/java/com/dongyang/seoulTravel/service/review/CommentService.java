@@ -48,7 +48,7 @@ public class CommentService {
 
         return CommentDto.createCommentDto(created);
     }
-
+    @Transactional
     public CommentDto update(Integer comment_id, CommentDto dto) {
         Comment target = commentRepository.findById(comment_id)
                 .orElseThrow(() -> new IllegalArgumentException("수정할 문서 없음"));

@@ -15,4 +15,5 @@ public class SeoulTravelApplication {
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
+
 }

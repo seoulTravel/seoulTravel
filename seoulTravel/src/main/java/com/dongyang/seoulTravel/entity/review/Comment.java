@@ -48,7 +48,6 @@ public class Comment {
         );
     }
     public void patch(CommentDto dto) {
-
         if (this.comment_id != dto.getComment_id())
             throw new IllegalArgumentException("잘못된 댓글 주소");
         if (dto.getUser_num() != null)
