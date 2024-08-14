@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,7 +39,7 @@ public class UserApiController {
     @PostMapping("/{user_email}")
     public ResponseEntity<UserDTO> create(@PathVariable String user_email,
                                           @RequestBody UserDTO dto){
-        UserDTO userDto = userService.create(user_email, dto);
+        UserDTO userDto = userService.create(user_email);
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
     @PatchMapping("/{user_email}")

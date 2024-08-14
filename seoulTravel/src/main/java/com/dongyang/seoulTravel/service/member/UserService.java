@@ -28,7 +28,7 @@ public class UserService {
 
 
     @Transactional
-    public UserDTO create(String email, UserDTO dto) {
+    public UserDTO create(String email) {
         User userEmail = userRepository.findById(email)
                 .orElseThrow(() -> new IllegalArgumentException("아이디 없음"));
 
