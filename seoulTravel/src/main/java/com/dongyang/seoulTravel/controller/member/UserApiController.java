@@ -31,14 +31,14 @@ public class UserApiController {
         }
         httpServletRequest.getSession().invalidate();
         HttpSession session = httpServletRequest.getSession(true);
+        System.out.print(user.getUser_Id());
         session.setAttribute("userId", user.getUser_Id());
         session.setMaxInactiveInterval(1800);
         return "redirect:/session-login";
     }
 
     @PostMapping("/{user_email}")
-    public ResponseEntity<UserDTO> create(@PathVariable String user_email,
-                                          @RequestBody UserDTO dto){
+    public ResponseEntity<UserDTO> create(@PathVariable String user_email){
         UserDTO userDto = userService.create(user_email);
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
