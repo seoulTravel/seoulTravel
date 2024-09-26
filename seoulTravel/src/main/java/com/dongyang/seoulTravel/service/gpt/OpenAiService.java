@@ -29,7 +29,7 @@ public class OpenAiService {
                 .bodyToMono(String.class);
     }
 
-    // ChatGPT API 요청의 Body 생성
+    // ChatGPT API 요청의 Body 생성....
     private String buildRequestBody(String prompt) {
         return "{"
                 + "\"model\": \"gpt-4\","
