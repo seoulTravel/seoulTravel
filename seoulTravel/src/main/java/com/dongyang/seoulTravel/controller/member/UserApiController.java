@@ -18,6 +18,7 @@ public class UserApiController {
     @Autowired
     private UserService userService;
 
+    // 로그인
     @PostMapping("/login")
     public String login(@ModelAttribute UserDTO dto, BindingResult bindingResult,
                         HttpServletRequest httpServletRequest) {
@@ -37,23 +38,36 @@ public class UserApiController {
         return "redirect:/session-login";
     }
 
-    @PostMapping("/{user_email}")
-    public ResponseEntity<UserDTO> create(@PathVariable String user_email,
+    // 회원가입
+    @PostMapping("/{user_id}")
+    public ResponseEntity<UserDTO> create(@PathVariable String user_id,
                                           @RequestBody UserDTO dto){
-        UserDTO userDto = userService.create(user_email, dto);
+        UserDTO userDto = userService.create(user_id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
-    @PatchMapping("/{user_email}")
-    public ResponseEntity<UserDTO> update(@PathVariable String user_email,
+    
+    // 멤버 수정
+    @PatchMapping("/{user_id}")
+    public ResponseEntity<UserDTO> update(@PathVariable String user_id,
                                           @RequestBody UserDTO dto){
-        UserDTO userDTO = userService.update(user_email, dto);
+        UserDTO userDTO = userService.update(user_id, dto);
 
         return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }
-    @DeleteMapping("/{user_email}")
-    public ResponseEntity<UserDTO> delete(@PathVariable String user_email){
-        UserDTO userDTO = userService.delete(user_email);
+    
+    // 회원 삭제
+    @DeleteMapping("/{user_id}")
+    public ResponseEntity<UserDTO> delete(@PathVariable String user_id){
+        UserDTO userDTO = userService.delete(user_id);
 
         return ResponseEntity.status(HttpStatus.OK).body(userDTO);
+    }
+
+
+    // 아이디 찾기 (이름과 이메일로 확인)
+    @PostMapping("/findId")
+    public ResponseEntity<String> findUserId(@RequestParam String email, @RequestParam String name) {
+        String userId = userService.findUserIdByEmailOrName(email, name);
+        return ResponseEntity.status(HttpStatus.OK).body(userId);
     }
 }
