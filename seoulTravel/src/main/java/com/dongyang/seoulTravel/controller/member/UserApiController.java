@@ -70,4 +70,12 @@ public class UserApiController {
         String userId = userService.findUserIdByEmailOrName(email, name);
         return ResponseEntity.status(HttpStatus.OK).body(userId);
     }
+
+    // 비밀번호 재설정
+    @PostMapping("/resetPassword")
+    public ResponseEntity<String> resetPassword(@RequestParam String email) {
+        userService.resetPasswordByEmail(email);
+        return ResponseEntity.status(HttpStatus.OK).body("비밀번호 재설정 이메일이 발송되었습니다.");
+    }
+
 }
