@@ -3,10 +3,14 @@ package com.dongyang.seoulTravel.entity.member;
 import com.dongyang.seoulTravel.dto.member.UserDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,6 +27,9 @@ public class User {
     private String user_sexual;
     private String file_id;
     private String favorite_theme;
+    //친구목록
+    @OneToMany(mappedBy = "user")
+    private List<Friendship> friendshipList = new ArrayList<>();
 
     public void patch(UserDTO dto){
         if(this.user_Id.equals(dto.getUser_Id())){

@@ -34,6 +34,7 @@ public class UserApiController {
         httpServletRequest.getSession().invalidate();
         HttpSession session = httpServletRequest.getSession(true);
         session.setAttribute("userId", user.getUser_Id());
+        session.setAttribute("userEmail", user.getUser_email());
         session.setMaxInactiveInterval(1800);
         return "redirect:/session-login";
     }

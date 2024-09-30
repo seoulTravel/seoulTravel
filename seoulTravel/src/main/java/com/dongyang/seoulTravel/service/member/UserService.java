@@ -107,4 +107,7 @@ public class UserService {
             throw new IllegalArgumentException("이메일 전송 실패");
         }
     }
+    public boolean isExistByEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();  // 사용자가 존재하면 true 반환
+    }
 }
