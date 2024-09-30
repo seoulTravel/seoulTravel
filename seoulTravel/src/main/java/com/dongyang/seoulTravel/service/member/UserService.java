@@ -80,4 +80,7 @@ public class UserService {
         // 이메일 전송 로직을 구현
         System.out.println("비밀번호 재설정 링크: " + resetLink);
     }
+    public boolean isExistByEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();  // 사용자가 존재하면 true 반환
+    }
 }
