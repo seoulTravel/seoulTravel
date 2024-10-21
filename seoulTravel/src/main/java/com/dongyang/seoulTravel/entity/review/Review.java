@@ -18,8 +18,8 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer review_id;
-    @Column
-    private Integer user_num;
+    @Column(name = "user_num")
+    private Integer userNum;
     @Column
     private Integer planner_id;
     @Column

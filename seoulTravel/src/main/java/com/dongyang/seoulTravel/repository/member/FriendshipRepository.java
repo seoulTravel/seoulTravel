@@ -9,5 +9,4 @@ import java.util.List;
 
 @Repository
 public interface FriendshipRepository extends JpaRepository<Friendship, Integer> {
-    List<Friendship> findByUserEmailAndStatus(String userEmail, FriendshipStatus status);
 }
