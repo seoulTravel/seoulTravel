@@ -34,6 +34,7 @@ public class UserApiController {
         httpServletRequest.getSession().invalidate();
         HttpSession session = httpServletRequest.getSession(true);
         session.setAttribute("userId", user.getUser_Id());
+        session.setAttribute("userEmail", user.getUser_email());
         session.setMaxInactiveInterval(1800);
         return "redirect:/session-login";
     }
@@ -70,4 +71,12 @@ public class UserApiController {
         String userId = userService.findUserIdByEmailOrName(email, name);
         return ResponseEntity.status(HttpStatus.OK).body(userId);
     }
+
+    // 비밀번호 재설정
+    @PostMapping("/resetPassword")
+    public ResponseEntity<String> resetPassword(@RequestParam String email) {
+        userService.resetPasswordByEmail(email);
+        return ResponseEntity.status(HttpStatus.OK).body("비밀번호 재설정 이메일이 발송되었습니다.");
+    }
+
 }
